@@ -1,4 +1,4 @@
-SELECT DISTINCT
+SELECT DISTINCT --TOP(10000)
     o.ord_id AS [Order ID],
     o.ord_invoicetaxDate AS [Tax Date],
     o.ord_net AS [Net],
@@ -13,22 +13,25 @@ SELECT DISTINCT
     CASE 
         WHEN ol.orl_compositionBundleParent = 1 THEN op.bpar_orl_calcRowNetValue
         WHEN ol.orl_compositionBundleChild = 1 THEN oc.bchd_orl_calcRowNetValue
+        ELSE ol.orl_rowNetValue
     END AS [Product Value],
     CASE 
         WHEN ol.orl_compositionBundleParent = 1 THEN op.bpar_orl_calcRowTaxValue
         WHEN ol.orl_compositionBundleChild = 1 THEN oc.bchd_orl_calcRowTaxValue
+        ELSE ol.orl_rowTaxValue
     END AS [Product Tax Value],
     ol.orl_productPriceValue AS [Price of Product],
     CASE 
         WHEN ol.orl_compositionBundleParent = 1 THEN op.bpar_orl_itemCostValue
         WHEN ol.orl_compositionBundleChild = 1 THEN oc.bchd_orl_itemCostValue
+        ELSE ol.orl_itemCostValue
     END AS [Cost of Product],
     ol.orl_nominalCode AS [Nominal Code]
 FROM dbo.tblOrder AS o
 LEFT JOIN dbo.tblOrderLine AS ol ON o.ord_id = ol.orl_ord_id
 LEFT JOIN Perceptium.tblOrderLineParentView AS op ON ol.orl_id = op.bpar_orl_id
 LEFT JOIN Perceptium.tblOrderLineChildView AS oc ON ol.orl_id = oc.bchd_orl_id
-WHERE o.ord_invoicetaxDate >= '2020-01-01' 
+WHERE o.ord_invoicetaxDate >= '2020-01-01'
 
 /*
 SELECT DISTINCT
