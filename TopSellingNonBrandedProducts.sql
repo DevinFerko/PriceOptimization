@@ -9,7 +9,7 @@ FROM dbo.tblOrderLine ol
 JOIN dbo.tblProduct p
     ON ol.orl_productId = p.prd_id
 WHERE p.prd_brandId NOT IN (104, 109, 155, 160, 182, 207, 211, 212, 225)
-AND ol.orl_productSku NOT IN ('S48', 'CCBL595WH/') --Use for skus you have already used in spreadsheet
+AND ol.orl_productSku NOT IN ('S48', 'CCBL595WH/', 'AMSTERDAM15-BS') --Use for skus you have already used in spreadsheet
 GROUP BY
     ol.orl_productId,
     ol.orl_productName,
