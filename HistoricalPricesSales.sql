@@ -31,8 +31,7 @@ FROM dbo.tblOrder AS o
 LEFT JOIN dbo.tblOrderLine AS ol ON o.ord_id = ol.orl_ord_id
 LEFT JOIN Perceptium.tblOrderLineParentView AS op ON ol.orl_id = op.bpar_orl_id
 LEFT JOIN Perceptium.tblOrderLineChildView AS oc ON ol.orl_id = oc.bchd_orl_id
-WHERE o.ord_invoicetaxDate >= '2020-01-01'
-
+WHERE ol.orl_productSku IN ('S48', 'CCBL595WH/', 'AMSTERDAM15-BS')
 /*
 SELECT DISTINCT
     o.ord_id AS [Order ID],
